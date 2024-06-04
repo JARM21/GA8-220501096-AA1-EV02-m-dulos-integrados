@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend_servidatos';
+  data: any;
+
+  constructor(private apiService: ApiService) { }
+
+  onSubmit(usuarioForm: any) {
+    const usuario = {
+      username: usuarioForm.value.username,
+      email: usuarioForm.value.email,
+      telephone: usuarioForm.value.telephone,
+      password: usuarioForm.value.password
+    };
+
+    this.apiService.createUsuario(usuario).subscribe(response => {
+      console.log('Usuario creado:', response);
+    });
+  }
 }
